@@ -1,0 +1,12 @@
+{
+  "name": "supera",
+  "displayName": "supera",
+  "expo": {
+    "name": "supera",
+    "slug": "supera",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
