@@ -31,7 +31,7 @@ import {
   SelectionRow, SelectionTitle,
 } from '../assets/styles/styled';
 
-export const Perfomance = ({ navigation }) => {
+export const Calendar = ({ navigation }) => {
 
   const [years, setYears] = React.useState([
     2019, 2020
@@ -125,7 +125,7 @@ export const Perfomance = ({ navigation }) => {
   return (
     // <StatusBar barStyle="dark-content" />
     <View style={styles.container3}>
-      <Header navigation={navigation} screenTitle="Rendimento" />
+      <Header navigation={navigation} screenTitle="Calendário" />
       <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }} showsVerticalScrollIndicator={false}>
 
         <SelectionTitle>ANO</SelectionTitle>
@@ -165,73 +165,7 @@ export const Perfomance = ({ navigation }) => {
             <SectionButtonTitle></SectionButtonTitle>
           </SectionButton>
         </SectionHeader>
-        {chartType == "BARRA" && <ScrollView style={{ width: '90%' }} showsHorizontalScrollIndicator={false}>
-          {currentData && currentData.map(c => {
-            return (
-              <TouchableOpacity key={c.id} style={{ marginVertical: 0, borderRadius: 5, padding: 5, alignItems: "flex-start", justifyContent: "center" }}>
-                <Text style={{ color: '#333', fontSize: 12, fontWeight: 'bold', minWidth: "15%" }}>{c.year}</Text>
-                <View style={{ backgroundColor: (c.middle(c) < 50) ? 'red' : (c.middle(c) < 90 ? 'orange' : "#08D6A0"), borderRadius: 5, padding: 5, alignItems: "center", justifyContent: "flex-start", flexDirection: 'row', width: c.middle(c) * 0.8 + "%", minWidth: 40, maxWidth: "90%" }}>
-                  <Text style={{ color: '#fff', fontSize: 14, fontWeight: 'bold' }}>{c.middle(c) + "%"}</Text>
-                </View>
-              </TouchableOpacity>
-            )
-          })
-          }
-          {currentData && currentData.map(c => {
-            return c.months.map(m => {
-              return (
-                <TouchableOpacity key={m.id + m.month + m.percent} style={{ marginVertical: 0, borderRadius: 5, padding: 5, alignItems: "flex-start", justifyContent: "center" }}>
-                  <Text style={{ color: '#333', fontSize: 12, fontWeight: 'bold', minWidth: "15%" }}>{m.month + ' ' + c.year}</Text>
-                  <View style={{ backgroundColor: (m.percent < 50) ? 'red' : (m.percent < 90 ? 'orange' : "#08D6A0"), borderRadius: 5, padding: 5, alignItems: "center", justifyContent: "flex-start", flexDirection: 'row', width: m.percent * 0.8 + "%", minWidth: 40, maxWidth: "90%" }}>
-                    <Text style={{ color: '#fff', fontSize: 14, fontWeight: 'bold' }}>{m.percent + "%"}</Text>
-                  </View>
-                </TouchableOpacity>
-              )
-            })
-          })
-          }
-        </ScrollView>}
-        {chartType == "PIZZA" && <ScrollView style={{ width: '90%' }} showsHorizontalScrollIndicator={false}>
-          {/* <PieChart
-            data={currentData.map((c, index) => {
-              let colors = ["#08D6A0", "#08A6D6", "#084FD6", "#7708D6", "#D608B6", "#D60810", "#08D64F", "#9FD608", "#D6B608", "#D66F08", "#4E4C4A"]
-              return { name: c.year, year: c.year, middle: c.middle(c), color: colors[index], legendFontColor: "#7F7F7F", legendFontSize: 10 }
-            })}
-            width={screenWidth * 0.9}
-            height={220}
-            chartConfig={chartConfig}
-            accessor="middle"
-            backgroundColor="transparent"
-            paddingLeft="15"
-          // absolute
-          /> */}
-          {currentData && currentData.map(c => {
-
-            let keys = [
-              { name: "CONCLUÍDO", value: c.middle(c) },
-              { name: "PENDENTE", value: 100 - c.middle(c) },
-            ];
-            return (
-              <View key={c.id} style={{ width: "100%" }}>
-                <SelectionTitle>{c.year}</SelectionTitle>
-                <PieChart
-                  data={keys.map((k, index) => {
-                    let colors = ["#08D6A0", "red", "#08A6D6", "#084FD6", "#7708D6", "#D608B6", "#D60810", "#08D64F", "#9FD608", "#D6B608", "#D66F08"]
-                    return { name: k.name, value: k.value, color: colors[index], legendFontColor: "#7F7F7F", legendFontSize: 10 }
-                  })}
-                  width={screenWidth * 0.9}
-                  height={220}
-                  chartConfig={chartConfig}
-                  accessor="value"
-                  backgroundColor="transparent"
-                  paddingLeft="15"
-                // absolute
-                />
-              </View>
-            )
-          })
-          }
-        </ScrollView>}
+        
       </ScrollView>
     </View>
 

@@ -20,6 +20,7 @@ import { Splash } from './src/screens/Splash';
 import { Home } from './src/screens/Home';
 import { Subjects } from './src/screens/Subjects';
 import { Perfomance } from './src/screens/Perfomance';
+import { Calendar } from './src/screens/Calendar';
 
 const LogoTitle = () => <Image style={{ width: 25, height: 40 }} source={logo3} />;
 
@@ -29,7 +30,7 @@ const Drawer = createDrawerNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Perfomance">
+      <Drawer.Navigator initialRouteName="Calendar">
         <Stack.Screen name="Splash" component={Splash} options={{ headerShown: null }} />
         <Drawer.Screen name="Login" component={Login} options={{ headerShown: null }} />
         <Drawer.Screen name="ForgotPassword" component={ForgotPassword}
@@ -38,6 +39,7 @@ function App() {
         <Drawer.Screen name="Home" component={Home} options={{ headerShown: null }} />
         <Drawer.Screen name="Subjects" component={Subjects} options={{ headerShown: null }} />
         <Drawer.Screen name="Perfomance" component={Perfomance} options={{ headerShown: null }} />
+        <Drawer.Screen name="Calendar" component={Calendar} options={{ headerShown: null }} />
       </Drawer.Navigator>
       {/* <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={HomeScreen} />
