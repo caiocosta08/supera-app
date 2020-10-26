@@ -11,9 +11,7 @@ import {
   Dimensions
 } from 'react-native';
 
-import { PieChart } from "react-native-chart-kit";
-
-const screenWidth = Dimensions.get("window").width;
+import { Picker } from '@react-native-picker/picker';
 
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -33,94 +31,11 @@ import {
 
 export const Calendar = ({ navigation }) => {
 
-  const [years, setYears] = React.useState([
-    2019, 2020
-  ]);
+  const [months, setMonths] = React.useState(["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"]);
+  const [month, setMonth] = React.useState(months[0]);
 
-
-  const [data, setData] = React.useState([
-    {
-      id: 1, year: 2019, months: [
-        { id: 1, month: "JAN", percent: 10 },
-        { id: 2, month: "FEV", percent: 10 },
-        { id: 3, month: "MAR", percent: 10 },
-        { id: 4, month: "ABR", percent: 10 },
-        { id: 5, month: "MAI", percent: 10 },
-        { id: 6, month: "JUN", percent: 10 },
-        { id: 7, month: "JUL", percent: 10 },
-        { id: 8, month: "AGO", percent: 10 },
-        { id: 9, month: "SET", percent: 10 },
-        { id: 10, month: "OUT", percent: 10 },
-        { id: 11, month: "NOV", percent: 10 },
-        { id: 12, month: "DEZ", percent: 10 },
-      ],
-      middle: (obj) => {
-        // console.log({ obj })
-        // let length = this.months.length;
-        let length = obj.months.length;
-        let total = 0;
-        // this.months.map(m => {
-        obj.months.map(m => {
-          total = total + m.percent;
-        });
-        console.log("Total from " + obj.year + ": " + total)
-        return Math.floor(total / length);
-      }
-    },
-    {
-      id: 2, year: 2020, months: [
-        { id: 1, month: "JAN", percent: 12 },
-        { id: 2, month: "FEV", percent: 54 },
-        { id: 3, month: "MAR", percent: 2 },
-        { id: 4, month: "ABR", percent: 34 },
-        { id: 5, month: "MAI", percent: 54 },
-        { id: 6, month: "JUN", percent: 23 },
-        { id: 7, month: "JUL", percent: 98 },
-        { id: 8, month: "AGO", percent: 65 },
-        { id: 9, month: "SET", percent: 34 },
-        { id: 10, month: "OUT", percent: 12 },
-        { id: 11, month: "NOV", percent: 100 },
-        { id: 12, month: "DEZ", percent: 55 },
-      ],
-      middle: (obj) => {
-        // console.log({ obj })
-        // let length = this.months.length;
-        let length = obj.months.length;
-        let total = 0;
-        // this.months.map(m => {
-        obj.months.map(m => {
-          total = total + m.percent;
-        });
-        console.log("Total from " + obj.year + ": " + total)
-        return Math.floor(total / length);
-      }
-    },
-  ]);
-  const [year, setYear] = React.useState(data[0].year);
-  const [month, setMonth] = React.useState(data[0].months[0].month);
-
-  const [currentData, setCurrentData] = React.useState(data);
-
-  const [chartTypes, setChartTypes] = React.useState([
-    "BARRA", "PIZZA"
-  ]);
-  const [chartType, setChartType] = React.useState(chartTypes[0]);
-
-  const test_data = [
-    { id: 1, name: "CONCLUÍDO", percent: 70, color: "#66EDFF", legendFontColor: "#7F7F7F", legendFontSize: 10 },
-    { id: 2, name: "PENDENTE", percent: 30, color: "#08D6A0", legendFontColor: "#7F7F7F", legendFontSize: 10 },
-  ];
-
-  const chartConfig = {
-    backgroundGradientFrom: "#1E2923",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#08130D",
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false, // optional
-  };
+  const [years, setYears] = React.useState(["2019", "2020"]);
+  const [year, setYear] = React.useState(years[0]);
 
   return (
     // <StatusBar barStyle="dark-content" />
@@ -130,33 +45,24 @@ export const Calendar = ({ navigation }) => {
 
         <SelectionTitle>ANO</SelectionTitle>
         <SelectionRow>
-
-          {data && data.map(y => {
-
-            return (
-              <BtnSelect key={y.year} selected={currentData.findIndex(c => c.year == y.year) != -1 ? true : false} onPress={() => {
-                if (currentData.findIndex(c => c.year == y.year) == -1) setCurrentData([...currentData, y]);
-                else setCurrentData(currentData.filter(c => c.year != y.year));
-              }}>
-                <TxtBtnSelect>{y.year}</TxtBtnSelect>
-              </BtnSelect>
-            );
-          })}
-
+          <Picker
+            selectedValue={year}
+            style={{ width: '100%', borderRadius: 10 }}
+            itemStyle={{ backgroundColor: "rgba(0,0,0,0.1)", height: 75, borderRadius: 10, padding: 10 }}
+            onValueChange={(itemValue, itemIndex) => setYear(itemValue)}>
+            {years && years.map(y => <Picker.Item key={y} label={y} value={y} />)}
+          </Picker>
         </SelectionRow>
 
-        <SelectionTitle>TIPO DO GRÁFICO</SelectionTitle>
+        <SelectionTitle>MÊS</SelectionTitle>
         <SelectionRow>
-
-          {chartTypes && chartTypes.map(c => {
-
-            return (
-              <BtnSelect key={c} selected={chartType == c ? true : false} onPress={() => setChartType(c)}>
-                <TxtBtnSelect>{c}</TxtBtnSelect>
-              </BtnSelect>
-            );
-          })}
-
+          <Picker
+            selectedValue={month}
+            style={{ width: '100%', borderRadius: 10 }}
+            itemStyle={{ backgroundColor: "rgba(0,0,0,0.1)", height: 75, borderRadius: 10, padding: 10 }}
+            onValueChange={(itemValue, itemIndex) => setMonth(itemValue)}>
+            {months && months.map(m => <Picker.Item key={m} label={m} value={m} />)}
+          </Picker>
         </SelectionRow>
 
         <SectionHeader>
@@ -165,9 +71,9 @@ export const Calendar = ({ navigation }) => {
             <SectionButtonTitle></SectionButtonTitle>
           </SectionButton>
         </SectionHeader>
-        
+
       </ScrollView>
-    </View>
+    </View >
 
   );
 };
